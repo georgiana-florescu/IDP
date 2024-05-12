@@ -11,18 +11,18 @@ app = FastAPI(root_path="/api/v1")
 def create_project(title: str, description: str, admin_id: int, status: str, access_level: str, token: str = Depends(JWTBearer())):
     params = {"title": title, "description": description, "admin_id": admin_id, "status": status, "access_level": access_level}
     response = requests.post(f"{IO_URL}/projects/", params=params)
-    return response
+    return response.json()
 
 @app.get("/projects/{user_id}")
 def get_projects(token: str = Depends(JWTBearer())):
     response = requests.get(f"{IO_URL}/projects/{user_id}")
-    return response
+    return response.json()
     
 
 @app.get("/projects/{user_id}/{project_id}")
 def get_project(project_id: int, token: str = Depends(JWTBearer())):
     response = requests.get(f"{IO_URL}/projects/{user_id}/{project_id}")
-    return response
+    return response.json()
 
 # DATA ENTRIES
 
@@ -35,20 +35,20 @@ def get_entries(project_id: int, user_id: str, token: str = Depends(JWTBearer())
 def create_data_entry(project_id: int, user_id: int, data_type: str, data_content: str, token: str = Depends(JWTBearer())):
     params = {"project_id": project_id, "user_id": user_id, "data_type": data_type, "data_content": data_content}
     response = requests.post(f"{IO_URL}/add_entry/", params=params)
-    return response
+    return response.json()
 
 @app.post("/entries/approve/")
 def approve_entry(entry_id: int, user_id: int, approved: bool, comments: str, token: str = Depends(JWTBearer())):
     params = {"entry_id": entry_id, "user_id": user_id, "approved": approved, "comments": comments}
     response = requests.post(f"{IO_URL}/approve_entry/", params=params)
-    return response
+    return response.json()
 
 
 @app.post("/validators/add/{project_id}/{user_id}")
 def add_validator(project_id: int, user_id: int, token: str = Depends(JWTBearer())):
     params = {"project_id": project_id, "user_id": user_id}
     response = requests.post(f"{IO_URL}/add_validator/", params=params)
-    return response
+    return response.json()
     
 
 if __name__ == "__main__":
