@@ -5,13 +5,13 @@ from passlib.context import CryptContext
 
 IO_URL = "http://localhost:8000"
 
-app = FastAPI()
+app = FastAPI(root_path="/api/auth")
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # AUTH ENDPOINTS
-@app.post("/auth/login/")
+@app.post("/login/")
 def login(username: str = Body(...), password: str = Body(...)):
     password_hash = get_password_hash(password)
 
@@ -24,7 +24,7 @@ def login(username: str = Body(...), password: str = Body(...)):
     user_id = response.json()["user_id"]
     return sign_jwt(user_id)
 
-@app.post("/auth/register/")
+@app.post("/register/")
 def register(username: str = Body(...), password: str = Body(...), email: str = Body(...)):
     password_hash = get_password_hash(password)
 
@@ -37,7 +37,7 @@ def register(username: str = Body(...), password: str = Body(...), email: str = 
     user_id = response.json()["user_id"]
     return sign_jwt(user_id)
 
-@app.get("/auth/verify/")
+@app.get("/verify/")
 def verify_token(authorization: str):
     print(authorization)
     try:

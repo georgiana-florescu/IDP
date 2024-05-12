@@ -11,7 +11,6 @@ on:
 
 jobs:
   build-and-deploy-auth:
-    if: contains(toJSON(github.event.commits.*.modified), 'auth_service/')
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
