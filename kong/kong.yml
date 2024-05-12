@@ -1,12 +1,12 @@
 _format_version: "2.1"
 
 services:
-  - name: my-service
-    url: http://mockbin.org
+  - name: auth-service
+    url: http://datacollect_auth-service:9000
     routes:
-      - name: my-route
-        paths:
-          - /mockbin
+     - name: auther-service 
+       paths:
+         - /api/auth
 
   - name: db-adminer
     url: http://datacollect_adminer:8080
