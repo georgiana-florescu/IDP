@@ -1,0 +1,83 @@
+name: CI/CD - Microservices
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'auth_service/**'
+      - 'logic_service/**'
+      - 'io_service/**'
+
+jobs:
+  build-and-deploy-auth:
+    if: contains(toJSON(github.event.commits.*.modified), 'auth_service/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.CI_REGISTRY_USER }}
+          password: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          registry: ${{ secrets.CI_REGISTRY }}
+
+      - name: Build and push Docker image for Auth Service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./auth_service
+          push: true
+          tags: ${{ secrets.CI_REGISTRY_IMAGE_AUTH_SERVICE }}
+
+      - name: Trigger deployment webhook for AuthService
+        run: curl -XPOST ${{ secrets.ATUH_SERVICE_WEBHOOK_URL }}
+
+  build-and-deploy-logic:
+    if: contains(toJSON(github.event.commits.*.modified), 'logic_service/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.CI_REGISTRY_USER }}
+          password: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          registry: ${{ secrets.CI_REGISTRY }}
+
+      - name: Build and push Docker image for Bussiness Logic Service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./logic_service
+          push: true
+          tags: ${{ secrets.CI_REGISTRY_IMAGE_LOGIC_SERVICE }}
+
+      - name: Trigger deployment webhook for Bussines Logic Service
+        run: curl -XPOST ${{ secrets.LOGIC_SERVICE_WEBHOOK_URL }}
+
+  build-and-deploy-io:
+    if: contains(toJSON(github.event.commits.*.modified), 'io_service/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.CI_REGISTRY_USER }}
+          password: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          registry: ${{ secrets.CI_REGISTRY }}
+
+      - name: Build and push Docker image for IO Service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./io_service
+          push: true
+          tags: ${{ secrets.CI_REGISTRY_IMAGE_IO_SERVICE }}
+
+      - name: Trigger deployment webhook for IO Service
+        run: curl -XPOST ${{ secrets.IO_SERVICE_WEBHOOK_URL }}
