@@ -2,7 +2,7 @@ from fastapi import Request, HTTPException
 import requests
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-AUTH_URL = "http://data_collect_auth-service:9000"
+AUTH_URL = "http://datacollect_auth-service:9000"
 
 class JWTBearer(HTTPBearer):
     def __init__(self, auto_error: bool = True):
