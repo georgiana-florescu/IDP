@@ -58,7 +58,6 @@ jobs:
         run: curl -XPOST ${{ secrets.LOGIC_SERVICE_WEBHOOK_URL }}
 
   build-and-deploy-io:
-    if: contains(toJSON(github.event.commits.*.modified), 'io_service/')
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

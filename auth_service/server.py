@@ -3,7 +3,7 @@ from auth_handler import sign_jwt, decode_jwt
 import requests
 from passlib.context import CryptContext
 
-IO_URL = "http://localhost:8000"
+IO_URL = "http://datacollect_io-service:8000"
 
 app = FastAPI(root_path="/api/auth")
 

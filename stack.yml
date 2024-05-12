@@ -9,6 +9,14 @@ services:
       - internal
       - io
 
+  io-service:
+    image: georgianaflorescu1306/io_service:latest
+    ports:
+      - 9020:8000
+    networks:
+      - io
+      - database
+
   db:
     image: postgres:12
     volumes:

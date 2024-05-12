@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 from passlib.context import CryptContext
 
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://myuser:mypassword@127.27.0.2:5432/mydatabase"
+SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://myuser:mypassword@datacollect_db:5432/mydatabase"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
