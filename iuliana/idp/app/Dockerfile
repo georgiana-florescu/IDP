@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the FastAPI application code into the container at /app
 COPY . /app/
 
-# Expose port 9000 to the outside world
-EXPOSE 9000
+# Expose port 7000 to the outside world
+EXPOSE 7000
 
 # Command to run the FastAPI application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7000"]
