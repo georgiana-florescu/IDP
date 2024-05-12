@@ -2,7 +2,7 @@ from fastapi import Request, HTTPException
 import requests
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-AUTH_URL = "http://localhost:9000"
+AUTH_URL = "http://data_collect_auth-service:9000"
 
 class JWTBearer(HTTPBearer):
     def __init__(self, auto_error: bool = True):
@@ -21,7 +21,7 @@ class JWTBearer(HTTPBearer):
 
     def verify_jwt(self, jwtoken: str) -> bool:
         # Send a request to the auth server to verify the token
-        response = requests.get(f"{AUTH_URL}/auth/verify/", params={"authorization": f"Bearer {jwtoken}"})
+        response = requests.get(f"{AUTH_URL}/api/auth/verify/", params={"authorization": f"Bearer {jwtoken}"})
         if response.status_code == 200:
             return True
         

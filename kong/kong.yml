@@ -8,6 +8,13 @@ services:
        paths:
          - /api/auth
 
+  - name: logic-service
+    url: http://datacollect_logic-service:7000
+    routes:
+      - name: logic-service
+        paths:
+          - /api/v1
+
   - name: db-adminer
     url: http://datacollect_adminer:8080
     routes:

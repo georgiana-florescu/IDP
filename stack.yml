@@ -9,10 +9,18 @@ services:
       - internal
       - io
 
+  logic-service:
+    image: georgianaflorescu1306/logic_service:latest
+    ports:
+      - 9011:7000
+    networks:
+      - io
+      - internal
+
   io-service:
     image: georgianaflorescu1306/io_service:latest
-    ports:
-      - 9020:8000
+    depends_on:
+      - db
     networks:
       - io
       - database
@@ -67,7 +75,9 @@ services:
   grafana:
     image: grafana/grafana:latest
     volumes:
-      - ./grafana/grafana_data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
     ports:
       - 3000:3000
     networks:
@@ -133,6 +143,7 @@ services:
 volumes:
   db-data:
   portainer_data:
+  grafana_data:
 
 networks:
   database:

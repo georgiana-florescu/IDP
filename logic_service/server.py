@@ -3,9 +3,9 @@ from auth_bearer import JWTBearer
 import requests
 from passlib.context import CryptContext
 
-IO_URL = "http://localhost:8000"
+IO_URL = "http://datacollect_io-service:8000"
 
-app = FastAPI()
+app = FastAPI(root_path="/api/v1")
 
 @app.post("/projects/")
 def create_project(title: str, description: str, admin_id: int, status: str, access_level: str, token: str = Depends(JWTBearer())):
