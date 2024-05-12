@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import inspect 
 from typing import List
 from database import SessionLocal, engine
-from models import User, Project, DataEntry, ApprovalStatus
+from models import User, Project, Base, DataEntry, ApprovalStatus
 from datetime import datetime
 import database
 import models
@@ -18,6 +18,8 @@ def get_db():
         yield db
     finally:
         db.close()
+
+Base.metadata.create_all(bind=engine)
 
 # API endpoints
 @app.get("/keepalive/")
