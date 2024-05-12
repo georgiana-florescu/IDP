@@ -1,0 +1,32 @@
+_format_version: "2.1"
+
+services:
+  - name: my-service
+    url: http://mockbin.org
+    routes:
+      - name: my-route
+        paths:
+          - /mockbin
+
+  - name: db-adminer
+    url: http://datacollect_adminer:8080
+    routes:
+      - name: adminer-service
+        paths:
+          - /adminer
+
+
+
+consumers:
+  - username: my-user
+plugins:
+  - name: prometheus
+
+  - name: bot-detection
+
+  - name: rate-limiting
+    config: 
+      minute: 10
+      limit_by: ip
+      policy: local
+
