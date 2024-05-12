@@ -21,7 +21,7 @@ class JWTBearer(HTTPBearer):
 
     def verify_jwt(self, jwtoken: str) -> bool:
         # Send a request to the auth server to verify the token
-        response = requests.get(f"{AUTH_URL}/api/auth/verify/", params={"authorization": f"Bearer {jwtoken}"})
+        response = requests.get(f"{AUTH_URL}/verify/", params={"authorization": f"Bearer {jwtoken}"})
         if response.status_code == 200:
             return True
         
