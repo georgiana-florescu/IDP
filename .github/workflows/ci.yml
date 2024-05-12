@@ -34,7 +34,6 @@ jobs:
         run: curl -XPOST ${{ secrets.AUTH_SERVICE_WEBHOOK_URL }}
 
   build-and-deploy-logic:
-    if: contains(toJSON(github.event.commits.*.modified), 'logic_service/')
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
